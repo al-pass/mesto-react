@@ -1,0 +1,8 @@
+.element__likes-box {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    grid-area: 12/2/14/2;
+    justify-self: end;
+    margin-top: -5px;
+}
