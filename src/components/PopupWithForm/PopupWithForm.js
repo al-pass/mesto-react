@@ -2,39 +2,28 @@ import React from 'react';
 import { closeIcon } from '../../image/images.js';
 
 
-class PopupWithForm extends React.Component {
-    constructor(props) {
-        super(props)
-        this.name = props.name;
-        this.title = props.title
-        this.props = props
-        this.onClose = props.onClose
-    }
+function PopupWithForm(props) {
 
-    _handleOverlayClick = (e) => {
-        if (e.target.classList.contains('popup')) {
-            this.onClose();
-        }
+const handleOverlayClick = (e) => {
+    if (e.target.classList.contains('popup')) {
+        props.onClose();
     }
+}
 
-    render() {
-        const popupOpen = this.props.isOpen;
-        return (
-            <div>
-                <section className={`popup ${popupOpen ? 'active' : ''}`} id={this.name} onClick={(e) => this._handleOverlayClick(e)}>
-                    <div className="popup__main-frame form">
-                        <button className="button" type="button" onClick={this.onClose}> <img className="popup__close-icon close-icon" alt="Иконка закрытия формы"
-                            src={closeIcon} /></button>
-                        <h2 className="popup__title">{this.title}</h2>
-                        <form name="popup__form" id={this.name}>
-                            {this.props.children}
-                        </form>
-                    </div>
-                </section>
-
-            </div>
-        )
-    }
+    const popupOpen = props.isOpen;
+    return (
+            <section className={`popup ${popupOpen ? 'active' : ''}`} id={props.name} onClick={(e) => {handleOverlayClick(e)}}>
+                <div className="popup__main-frame form">
+                    <button className="button" type="button" onClick={props.onClose}> <img className="popup__close-icon close-icon" alt="Иконка закрытия формы"
+                        src={closeIcon} /></button>
+                    <h2 className="popup__title">{props.title}</h2>
+                    <form name={props.name} id={props.name}>
+                        {props.children}
+                        <button className="popup__submit form__submit button" type="submit">{props.buttonText}</button>
+                    </form>
+                </div>
+            </section>
+    )
 }
 
 export default PopupWithForm

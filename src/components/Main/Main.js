@@ -8,11 +8,11 @@ import Card from '../Card/Card.js';
 
 
 function Main(props) {
-    let [userName, changeName] = React.useState('a');
-    let [userDescription, changeDescription] = React.useState('b');
-    let [userAvatar, changeAvatar] = React.useState('c');
-    let [isLoading, setIsLoading] = React.useState(true)
-    let [cards, setCards] = React.useState([]);
+    const [userName, changeName] = React.useState('a');
+    const [userDescription, changeDescription] = React.useState('b');
+    const [userAvatar, changeAvatar] = React.useState('c');
+    const [isLoading, setIsLoading] = React.useState(true)
+    const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
         api.getProfileInfo()
@@ -28,19 +28,19 @@ function Main(props) {
             .then((res) => {
                 setCards(res)
             })
-            .finally(() => {
-                setIsLoading(false)
-            })
             .catch(err => {
                 console.log(`Произошла ошибка получение карточек:s: ${err}`);
+            })
+            .finally(() => {
+                setIsLoading(false)
             });
 
     }, [])
 
-    
+
     return (
         <main id="main">
-        {isLoading && <h1 className="profile__profile-info-name">Прогружаю...</h1>}
+            {isLoading && <h1 className="profile__profile-info-name">Прогружаю...</h1>}
             <section className="profile">
                 <div className="profile__profile-info">
                     <div className="profile__avatar-div">
@@ -60,7 +60,15 @@ function Main(props) {
                     src={addButton} alt="Кнопка добавление карточки" /></button>
             </section>
             <section className="elements">
-                {cards.map(item=><Card key={item._id} link={item.link} likes={item.likes} name={item.name} onCardClick={props.onCardClick}/>) }
+                {cards.map(item => (
+                    <Card
+                        key={item._id}
+                        link={item.link}
+                        likes={item.likes}
+                        name={item.name}
+                        onCardClick={props.onCardClick} />
+                )
+                )}
             </section>
         </main>
     )
